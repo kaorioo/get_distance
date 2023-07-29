@@ -30,50 +30,10 @@ int distFL;
 
 void setup()
 {
-  
-  M5.begin();
-  M5.Power.begin();
-  Serial.begin(115200);
-
-  // 画面初期設定
-  M5.Lcd.setCursor(10, 10);
-  M5.Lcd.setTextSize(2);
-  M5.Lcd.println("START");
-  
-  // シリアル通信機能の設定
-  // Serial2.begin(unsigned long baud, uint32_t config, int8_t rxPin, int8_t txPin, bool invert)
-  Serial2.begin(115200, SERIAL_8N1, 16, 17);
-
-  M5.begin();
-  M5.Power.begin();
-  tca9548a.address(PaHub_I2C_ADDRESS); // Set the I2C address.  设置I2C地址
-  // M5.Lcd.setTextFont(4);
-  // M5.Lcd.setCursor(70, 0, 4);
-  // M5.Lcd.setTextColor(YELLOW, TFT_BLACK);
-  // M5.Lcd.setTextColor(TFT_WHITE, TFT_BLACK);
-  Serial.begin (115200);
-  sensor.begin();
-  
-
-  // // Power chipがgpio21, gpio22, I2Cにつながれたデバイスに接続される。
-  // //バッテリー動作の場合はこの関数を読んでください（バッテリーの電圧を調べるらしい）
-
-  Wire.begin(); // I2C通信を開始する
-  // Serial2.begin(unsigned long baud, uint32_t config, int8_t rxPin, int8_t txPin, bool invert)
-  Serial2.begin(115200, SERIAL_8N1, 16, 17);
-
-
-
-
-
-  //                         // M5.Lcd.print("ok2");
-
-    M5.begin(true, false, true, true);
+  M5.begin(true, false, true, true);
   M5.Power.begin();
 
-  //Serial.begin(115200);  
-  delay(100);
-  //Serial.println("test");
+  Serial.begin(115200);  
   tca9548a.address(PaHub_I2C_ADDRESS);
 
   M5.Lcd.fillRect(0, 0, 319, 239, BLACK);
@@ -82,15 +42,16 @@ void setup()
   M5.Lcd.fillRect(0, 0, 319, 35, WHITE);
   M5.Lcd.println("Press B to start");
 
-
+  while(!(M5.BtnB.wasPressed())){
+    //Serial.print(".");
+    M5.update();  
+  }
   M5.Lcd.fillRect(0, 0, 319, 239, WHITE);
 
 }
 
 void getsonic()
 {
-
-
   M5.update();
   M5.Lcd.fillRect(0, 35, 319, 189, BLACK);
 
@@ -125,9 +86,6 @@ void getsonic()
   Serial.print(distRR);
   Serial.println(' ');
 */
-
-  
-
   //描画
   bool RWall = !(distRF > 250 && distRR > 250);  // true if Right wall exists 
   bool FWall = !(distFL > 200 && distFR > 200);          // true if Front wall
