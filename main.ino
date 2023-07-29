@@ -5,7 +5,7 @@
 #include "BaseX.h"
 #include <Unit_Sonic.h>
 #include "ClosedCube_TCA9548A.h"
-#include "distanceSensor.h" //順番
+#include "distanceget.h" //順番
 #include "Adafruit_TCS34725.h"
 
 #define FRONT 2
